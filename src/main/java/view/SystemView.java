@@ -16,6 +16,8 @@ public class SystemView extends JFrame implements ChangeListener{
 
     SystemController systemController = SystemController.getInstance();
 
+	private static JLabel lights, state_gear1, state_gear2, state_gear3, state_door1, state_door2, state_door3, pic_gear1, pic_gear2, pic_gear3, pic_door1, pic_door2, pic_door3;
+
 	public SystemView() throws IOException {
 		
 	    this.setTitle("Landing Gear Control Pannel");
@@ -53,7 +55,7 @@ public class SystemView extends JFrame implements ChangeListener{
 	
 		image_vide = ImageIO.read(file_vide);
 		
-	    JLabel lights = new JLabel();
+	    lights = new JLabel();
 	    lights.setBounds(200, 50, 75, 160);
 	    lights.setIcon(new ImageIcon(image_vide));
 	    
@@ -65,34 +67,34 @@ public class SystemView extends JFrame implements ChangeListener{
 	    
 	    
 	    //******************************GEARS******************************
-	    String path = "./images/gear_retracted.jpg";
-        File file = new File(path);
-        BufferedImage image;
+	    String path_gear = "./images/gear_retracted.jpg";
+        File file_gear = new File(path_gear);
+        BufferedImage image_gear;
 	
-		image = ImageIO.read(file);
+		image_gear = ImageIO.read(file_gear);
 	    
 	    JLabel gear1 = new JLabel("Gear 1");
 	    gear1.setBounds(10, 280, 100, 10);
-	    JLabel pic_gear1 = new JLabel();
+	    pic_gear1 = new JLabel();
 	    pic_gear1.setBounds(10, 300, 100, 100);
-	    pic_gear1.setIcon(new ImageIcon(image));
-	    JLabel state_gear1 = new JLabel("State: UP");
+	    pic_gear1.setIcon(new ImageIcon(image_gear));
+	    state_gear1 = new JLabel("State: UP");
 	    state_gear1.setBounds(10, 420, 100, 10);
 	    
 	    JLabel gear2 = new JLabel("Gear 2");
 	    gear2.setBounds(120, 280, 100, 10);
-	    JLabel pic_gear2 = new JLabel();
+	    pic_gear2 = new JLabel();
 	    pic_gear2.setBounds(120, 300, 100, 100);
-	    pic_gear2.setIcon(new ImageIcon(image));
-	    JLabel state_gear2 = new JLabel("State: UP");
+	    pic_gear2.setIcon(new ImageIcon(image_gear));
+	    state_gear2 = new JLabel("State: UP");
 	    state_gear2.setBounds(120, 420, 100, 10);
 	    
 	    JLabel gear3 = new JLabel("Gear 3");
 	    gear3.setBounds(230, 280, 100, 10);
-	    JLabel pic_gear3 = new JLabel();
+	    pic_gear3 = new JLabel();
 	    pic_gear3.setBounds(230, 300, 100, 100);
-	    pic_gear3.setIcon(new ImageIcon(image));
-	    JLabel state_gear3 = new JLabel("State: UP");
+	    pic_gear3.setIcon(new ImageIcon(image_gear));
+	    state_gear3 = new JLabel("State: UP");
 	    state_gear3.setBounds(230, 420, 100, 10);
 	    
 	    this.add(gear1);
@@ -118,26 +120,26 @@ public class SystemView extends JFrame implements ChangeListener{
 	    
 	    JLabel door1 = new JLabel("Door 1");
 	    door1.setBounds(10, 470, 100, 20);
-	    JLabel pic_door1 = new JLabel();
+	    pic_door1 = new JLabel();
 	    pic_door1.setBounds(10, 500, 106, 101);
 	    pic_door1.setIcon(new ImageIcon(image_door));
-	    JLabel state_door1 = new JLabel("State: CLOSED");
+	    state_door1 = new JLabel("State: CLOSED");
 	    state_door1.setBounds(10, 620, 100, 20);
 	    
 	    JLabel door2 = new JLabel("Door 2");
 	    door2.setBounds(120, 470, 100, 20);
-	    JLabel pic_door2 = new JLabel();
+	    pic_door2 = new JLabel();
 	    pic_door2.setBounds(120, 500, 106, 101);
 	    pic_door2.setIcon(new ImageIcon(image_door));
-	    JLabel state_door2 = new JLabel("State: CLOSED");
+	    state_door2 = new JLabel("State: CLOSED");
 	    state_door2.setBounds(120, 620, 100, 20);
 	    
 	    JLabel door3 = new JLabel("Door 3");
 	    door3.setBounds(230, 470, 100, 20);
-	    JLabel pic_door3 = new JLabel();
+	    pic_door3 = new JLabel();
 	    pic_door3.setBounds(230, 500, 106, 101);
 	    pic_door3.setIcon(new ImageIcon(image_door));
-	    JLabel state_door3 = new JLabel("State: CLOSED");
+	    state_door3 = new JLabel("State: CLOSED");
 	    state_door3.setBounds(230, 620, 100, 20);
 	    
 	    
@@ -168,12 +170,52 @@ public class SystemView extends JFrame implements ChangeListener{
         if (!source.getValueIsAdjusting())
         {
             int action = (int) source.getValue();
-            if (action == 0 || action == 40) systemController.changeSystemState();
-        }
+            if (action == 0 || action == 40) {
+				try {
+					systemController.changeSystemState();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
     }
 
     public void refreshDoor()
     {
         //TODO: Implement function
     }
+
+	public static void refreshGear(String state) throws IOException {
+		//TODO: Implement function
+		String path = "";
+		System.out.println("step 1");
+
+		if(state.equals("moving"))
+		{
+			path = "./images/gear_moving.jpg";
+		}
+		else if(state.equals("down"))
+		{
+			path = "./images/gear_down.PNG";
+		}
+		else if(state.equals("up"))
+		{
+			path = "./images/gear_retracted.jpg";
+		}
+
+		File file = new File(path); System.out.println("step 3");
+		BufferedImage icon = ImageIO.read(file); System.out.println("step 4");
+
+		pic_gear1.setIcon(new ImageIcon(icon));
+		pic_gear2.setIcon(new ImageIcon(icon));
+		pic_gear3.setIcon(new ImageIcon(icon));
+
+		System.out.println("step 5");
+
+		state_gear1.setText("State: "+state);
+		state_gear2.setText("State: "+state);
+		state_gear3.setText("State: "+state);
+
+		System.out.println("step 6");
+	}
 }

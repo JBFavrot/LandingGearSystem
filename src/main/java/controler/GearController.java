@@ -1,7 +1,9 @@
 package controler;
 
 import model.GearModel;
+import view.SystemView;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -24,8 +26,7 @@ public class GearController {
     }
 
 
-    public int changeGearState()
-    {
+    public int changeGearState() throws IOException {
         Boolean testGearsState=true;
 
         //Check all gears have the same state
@@ -69,12 +70,12 @@ public class GearController {
     }
 
 
-    private void closeGears()
-    {
+    private void closeGears() throws IOException {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.movingUp);
             System.out.println(gear.toString() + " " + gear.getState());
+            SystemView.refreshGear("moving");
         }
         try
         {
@@ -88,15 +89,16 @@ public class GearController {
         {
             gear.setState(GearModel.states.up);
             System.out.println(gear.toString() + " " + gear.getState());
+            SystemView.refreshGear("up");
         }
     }
 
-    private void openGears()
-    {
+    private void openGears() throws IOException {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.movingDown);
             System.out.println(gear.toString() + " " + gear.getState());
+            SystemView.refreshGear("moving");
         }
         try
         {
@@ -110,6 +112,7 @@ public class GearController {
         {
             gear.setState(GearModel.states.down);
             System.out.println(gear.toString() + " " + gear.getState());
+            SystemView.refreshGear("down");
         }
     }
 

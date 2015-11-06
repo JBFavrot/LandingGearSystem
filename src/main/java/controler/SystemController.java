@@ -1,5 +1,7 @@
 package controler;
 
+import java.io.IOException;
+
 /**
  * Created by Jean-Baptiste on 06/11/2015.
  */
@@ -17,8 +19,7 @@ public class SystemController {
     }
 
 
-    public void changeSystemState()
-    {
+    public void changeSystemState() throws IOException {
         gearController.changeGearState();
     }
 
