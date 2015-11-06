@@ -29,11 +29,9 @@ public class GearModel {
     /**
      * Setter for gearState
      * @param state new state of the gear
-     * @return updated state of the gear
      */
-    public states setState(states state)
+    public void setState(states state)
     {
         gearState=state;
-        return state;
     }
 }

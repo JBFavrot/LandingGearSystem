@@ -5,13 +5,12 @@ import java.io.IOException;
 
 /**
  * Created by Jean-Baptiste on 06/11/2015.
+ * Main controller for the system
+ * Is a singleton
  */
 public class SystemController {
 
-    GearController gearController = new GearController();
-    DoorController doorController = new DoorController();
-
-    int state=1;
+    private int state=1;
 
     private static SystemController ourInstance = new SystemController();
 
@@ -23,10 +22,15 @@ public class SystemController {
     }
 
 
-    Thread gearThread = null;
-    Thread doorThread = null;
-    Thread mainThread = null;
+    private Thread gearThread = null;
+    private Thread doorThread = null;
+    private Thread mainThread = null;
 
+
+    /**
+     * This function is the main program thread, it deals with the opening and closing of the doors and gears.
+     * To keep track of the current state in case of new command during another command, it uses states.
+     */
     public void changeSystemState() {
         if(mainThread!=null)
         {
@@ -46,19 +50,19 @@ public class SystemController {
                 switch(state)
                 {
                     case 1:
-                        doorThread = new Thread(new RunnDoor());
+                        doorThread = new Thread(new RunnableDoor());
                         doorThread.start();
                         synchronized (doorThread)
                         {
                             try {
                                 doorThread.wait();
-                                gearThread = new Thread(new RunnGear());
+                                gearThread = new Thread(new RunnableGear());
                                 gearThread.start();
                                 synchronized (gearThread)
                                 {
                                     try {
                                         gearThread.wait();
-                                        doorThread = new Thread(new RunnDoor());
+                                        doorThread = new Thread(new RunnableDoor());
                                         doorThread.start();
                                     } catch (InterruptedException e) {
                                         state=2;
@@ -75,13 +79,13 @@ public class SystemController {
 
                         break;
                     case 2:
-                        gearThread = new Thread(new RunnGear());
+                        gearThread = new Thread(new RunnableGear());
                         gearThread.start();
                         synchronized (gearThread)
                         {
                             try {
                                 gearThread.wait();
-                                doorThread = new Thread(new RunnDoor());
+                                doorThread = new Thread(new RunnableDoor());
                                 doorThread.start();
                                 synchronized (doorThread) {
                                     try {
@@ -101,7 +105,7 @@ public class SystemController {
                         }
                         break;
                     case 3:
-                        doorThread = new Thread(new RunnDoor());
+                        doorThread = new Thread(new RunnableDoor());
                         doorThread.start();
                         synchronized (doorThread) {
                             try {
@@ -127,9 +131,12 @@ public class SystemController {
 
 }
 
-class RunnGear implements Runnable
+/**
+ * Runnable class to change gears state
+ */
+class RunnableGear implements Runnable
 {
-    GearController gearController = new GearController();
+    private GearController gearController = new GearController();
     public void run() {
         try {
             gearController.changeGearState();
@@ -141,9 +148,12 @@ class RunnGear implements Runnable
     }
 }
 
-class RunnDoor implements Runnable
+/**
+ * Runnable class to change Door states
+ */
+class RunnableDoor implements Runnable
 {
-    DoorController doorController = new DoorController();
+    private DoorController doorController = new DoorController();
     public void run() {
         try {
             doorController.changeDoorState();

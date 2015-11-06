@@ -5,6 +5,8 @@ import java.util.Vector;
 
 /**
  * Created by Jean-Baptiste on 06/11/2015.
+ * Model for all data
+ * Is a singleton
  */
 public class DataModel {
     private static DataModel ourInstance = new DataModel();
@@ -15,26 +17,24 @@ public class DataModel {
         return ourInstance;
     }
 
-    private GearModel gearFront = new GearModel();
-    private GearModel gearLeft = new GearModel();
-    private GearModel gearRight = new GearModel();
-
-    private DoorModel doorFront = new DoorModel();
-    private DoorModel doorLeft = new DoorModel();
-    private DoorModel doorRight = new DoorModel();
-
 
 
     private DataModel() {
         gears = new Vector<GearModel>();
         doors = new Vector<DoorModel>();
 
+        GearModel gearFront = new GearModel();
         gears.add(gearFront);
+        GearModel gearLeft = new GearModel();
         gears.add(gearLeft);
+        GearModel gearRight = new GearModel();
         gears.add(gearRight);
 
+        DoorModel doorFront = new DoorModel();
         doors.add(doorFront);
+        DoorModel doorLeft = new DoorModel();
         doors.add(doorLeft);
+        DoorModel doorRight = new DoorModel();
         doors.add(doorRight);
     }
 

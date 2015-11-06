@@ -19,7 +19,7 @@ import javax.swing.event.ChangeListener;
  */
 public class SystemView extends JFrame implements ChangeListener{
 
-    SystemController systemController = SystemController.getInstance();
+    private SystemController systemController = SystemController.getInstance();
 
 	private static JLabel lights, state_gear1, state_gear2, state_gear3, state_door1, state_door2, state_door3, pic_gear1, pic_gear2, pic_gear3, pic_door1, pic_door2, pic_door3;
 
@@ -29,7 +29,7 @@ public class SystemView extends JFrame implements ChangeListener{
      */
 	public SystemView() throws IOException {
 		
-	    this.setTitle("Landing Gear Control Pannel");
+	    this.setTitle("Landing Gear Control Panel");
 	    this.setSize(370, 700);
 	    this.setResizable(false);
 	    this.setLocationRelativeTo(null);	    
@@ -178,7 +178,7 @@ public class SystemView extends JFrame implements ChangeListener{
         JSlider source = (JSlider)e.getSource();
         if (!source.getValueIsAdjusting())
         {
-            int action = (int) source.getValue();
+            int action = source.getValue();
             if (action == 0 || action == 40) {
                 systemController.changeSystemState();
 			}
@@ -255,7 +255,7 @@ public class SystemView extends JFrame implements ChangeListener{
 
 		state_gear1.setText("State: "+state.toString());
 		state_gear2.setText("State: "+state.toString());
-		state_gear3.setText("State: "+state.toString());
+		state_gear3.setText("State: " + state.toString());
 
 	}
 }

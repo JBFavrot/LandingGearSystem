@@ -1,27 +1,18 @@
 import java.io.IOException;
 
-import controler.*;
 import view.*;
-import model.*;
-
-import javax.swing.JFrame;
 
 
-public class Test {
+class Test {
 
+    /**
+     * Main function for tests
+     * @param args no arguments required
+     * @throws IOException
+     */
 	public static void main(String[] args) throws IOException {
 
-        //Initialisation
-
-        SystemController systemController = SystemController.getInstance();
-
-
-        //Display
-
-		SystemView pannel = new SystemView();
-
-        //Tests
-
+		SystemView panel = new SystemView();
 	}
 
 }

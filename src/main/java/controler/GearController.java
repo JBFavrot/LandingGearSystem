@@ -12,7 +12,7 @@ import java.util.*;
  * Controller for gears
  */
 
-public class GearController {
+class GearController {
 
     private List<GearModel> gears = null;
 
@@ -21,17 +21,24 @@ public class GearController {
         gears = DataModel.getInstance().getGears();
     }
 
-   
 
-
-    public int changeGearState() throws IOException,InterruptedException {
+    /**
+     * Switches between states of the gear system.
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void changeGearState() throws IOException,InterruptedException {
         Boolean testGearsState=true;
 
         //Check all gears have the same state
-        GearModel.states firstGearState = null;
+        GearModel.states firstGearState;
         if(gears.size()!=0)
         {
             firstGearState = gears.get(0).getState();
+        }
+        else
+        {
+            firstGearState = GearModel.states.problem;
         }
 
         for(GearModel gear:gears)
@@ -41,9 +48,11 @@ public class GearController {
             {
                 testGearsState=false;
             }
+
         }
         if(testGearsState)
         {
+            //Determines which action to do in each case
             switch (firstGearState) {
                 case down:
                     closeGears();
@@ -64,10 +73,13 @@ public class GearController {
 
             }
         }
-        return 0;
     }
 
-
+    /**
+     * Closes the gears, the operation takes 5s
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private void closeGears() throws IOException, InterruptedException {
         for(GearModel gear:gears)
         {
@@ -91,6 +103,11 @@ public class GearController {
         System.out.println("Gears " + gears.get(1).getState());
     }
 
+    /**
+     * Opens the gears, the operation takes 5s
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private void openGears() throws IOException, InterruptedException {
         for(GearModel gear:gears)
         {
@@ -114,6 +131,9 @@ public class GearController {
         System.out.println("Gears " + gears.get(1).getState());
     }
 
+    /**
+     * In case of problem, it will set the data to "problem"
+     */
     private void riseProblem()
     {
         for(GearModel gear:gears)
@@ -121,9 +141,4 @@ public class GearController {
             gear.setState(GearModel.states.problem);
         }
     }
-
-    public void add(GearModel gearModel) {
-        gears.add(gearModel);
-    }
-
 }

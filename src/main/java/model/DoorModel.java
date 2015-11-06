@@ -9,6 +9,7 @@ package model;
 
 public class DoorModel {
 
+
     public enum states{
         movingUp,
         movingDown,
@@ -30,11 +31,9 @@ public class DoorModel {
     /**
      * Setter for doorState
      * @param state new state of the door
-     * @return updated state of the door
      */
-    public states setState(states state)
+    public void setState(states state)
     {
         doorState=state;
-        return state;
     }
 }
