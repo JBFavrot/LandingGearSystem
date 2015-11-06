@@ -14,12 +14,19 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+/**
+ * Created by Emma-Louise on 05/11/2015
+ */
 public class SystemView extends JFrame implements ChangeListener{
 
     SystemController systemController = SystemController.getInstance();
 
 	private static JLabel lights, state_gear1, state_gear2, state_gear3, state_door1, state_door2, state_door3, pic_gear1, pic_gear2, pic_gear3, pic_door1, pic_door2, pic_door3;
 
+	/**
+	 * Initializes the user interface with all of its components
+	 * @throws IOException
+     */
 	public SystemView() throws IOException {
 		
 	    this.setTitle("Landing Gear Control Pannel");
@@ -178,9 +185,14 @@ public class SystemView extends JFrame implements ChangeListener{
 		}
     }
 
+	/**
+	 *
+	 * Invoked to update the view of the doors states given their current state in the sequence
+	 * @param state
+	 * @throws IOException
+     */
     public static void refreshDoor(DoorModel.states state) throws IOException
     {
-        //TODO: Implement function
 		String path = "";
 
 		if(state == DoorModel.states.movingUp || state == DoorModel.states.movingDown )
@@ -209,8 +221,13 @@ public class SystemView extends JFrame implements ChangeListener{
 
     }
 
+	/**
+	 * Invoked to update the view of the gears states given their current state in the sequence
+	 * @param state
+	 * @throws IOException
+     */
 	public static void refreshGear(GearModel.states state) throws IOException {
-		//TODO: Implement function
+
 		String path = "";
 
 		if(state == GearModel.states.movingUp || state == GearModel.states.movingDown )
