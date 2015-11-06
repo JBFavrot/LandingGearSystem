@@ -51,7 +51,7 @@ public class DoorController {
                     openDoor();
                     break;
                 case movingDown:
-                    openDoor();
+                    closeDoor();
                     break;
                 case problem:
                     break;
@@ -75,8 +75,8 @@ public class DoorController {
         for(DoorModel door:doors)
         {
             door.setState(DoorModel.states.movingDown);
-            SystemView.refreshDoor(door.getState());
         }
+        SystemView.refreshDoor(doors.get(0).getState());
         System.out.println("Doors " + doors.get(0).getState());
         try
         {
@@ -89,8 +89,8 @@ public class DoorController {
         for(DoorModel door:doors)
         {
             door.setState(DoorModel.states.opened);
-            SystemView.refreshDoor(door.getState());
         }
+        SystemView.refreshDoor(doors.get(0).getState());
         System.out.println("Doors " + doors.get(0).getState());
     }
 
@@ -112,8 +112,8 @@ public class DoorController {
         for(DoorModel door:doors)
         {
             door.setState(DoorModel.states.closed);
-            SystemView.refreshDoor(door.getState());
         }
+        SystemView.refreshDoor(doors.get(0).getState());
         System.out.println("Doors " + doors.get(0).getState());
     }
 }

@@ -72,9 +72,9 @@ public class GearController {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.movingUp);
-            System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear(gear.getState());
         }
+        SystemView.refreshGear(gears.get(1).getState());
+        System.out.println("Gears " + gears.get(1).getState());
         try
         {
             Thread.sleep(5000);
@@ -86,18 +86,18 @@ public class GearController {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.up);
-            System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear(gear.getState());
         }
+        SystemView.refreshGear(gears.get(1).getState());
+        System.out.println("Gears " + gears.get(1).getState());
     }
 
     private void openGears() throws IOException, InterruptedException {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.movingDown);
-            System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear(gear.getState());
         }
+        SystemView.refreshGear(gears.get(1).getState());
+        System.out.println("Gears " + gears.get(1).getState());
         try
         {
             Thread.sleep(5000);
@@ -109,9 +109,9 @@ public class GearController {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.down);
-            System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear(gear.getState());
         }
+        SystemView.refreshGear(gears.get(1).getState());
+        System.out.println("Gears " + gears.get(1).getState());
     }
 
     private void riseProblem()

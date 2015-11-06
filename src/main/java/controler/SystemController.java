@@ -25,81 +25,102 @@ public class SystemController {
 
     Thread gearThread = null;
     Thread doorThread = null;
+    Thread mainThread = null;
 
     public void changeSystemState() {
-        if(doorThread!=null)
+        if(mainThread!=null)
         {
-            doorThread.interrupt();
+            if(doorThread!=null)
+            {
+                doorThread.interrupt();
+            }
+            if(gearThread!=null)
+            {
+                gearThread.interrupt();
+            }
+            mainThread.interrupt();
         }
-        if(gearThread!=null)
-        {
-            gearThread.interrupt();
-        }
-        switch(state)
-        {
-            case 1:
-                doorThread = new Thread(new RunnDoor());
-                doorThread.start();
-                synchronized (doorThread)
+        mainThread = new Thread(new Runnable() {
+            public void run() {
+                System.out.println("Case: " + state);
+                switch(state)
                 {
-                    try {
-                        doorThread.wait();
-                    } catch (InterruptedException e) {
-                        state=3;
-                    }
-                    gearThread = new Thread(new RunnGear());
-                    gearThread.start();
-                    synchronized (gearThread)
-                    {
-                        try {
-                            gearThread.wait();
-                        } catch (InterruptedException e) {
-                            state=2;
-                        }
+                    case 1:
                         doorThread = new Thread(new RunnDoor());
                         doorThread.start();
-                    }
-                }
+                        synchronized (doorThread)
+                        {
+                            try {
+                                doorThread.wait();
+                                gearThread = new Thread(new RunnGear());
+                                gearThread.start();
+                                synchronized (gearThread)
+                                {
+                                    try {
+                                        gearThread.wait();
+                                        doorThread = new Thread(new RunnDoor());
+                                        doorThread.start();
+                                    } catch (InterruptedException e) {
+                                        state=2;
+                                        System.out.println(state);
+                                    }
 
-                break;
-            case 2:
-                gearThread = new Thread(new RunnGear());
-                gearThread.start();
-                synchronized (gearThread)
-                {
-                    try {
-                        gearThread.wait();
-                    } catch (InterruptedException e) {
-                        state=2;
-                    }
-                    doorThread = new Thread(new RunnDoor());
-                    doorThread.start();
-                    synchronized (doorThread) {
-                        try {
-                            doorThread.wait();
-                        } catch (InterruptedException e) {
-                            state=3;
+                                }
+                            } catch (InterruptedException e) {
+                                state=3;
+                                System.out.println(state);
+                            }
+
                         }
-                        state = 1;
-                    }
-                }
-                break;
-            case 3:
-                doorThread = new Thread(new RunnDoor());
-                doorThread.start();
-                synchronized (doorThread) {
-                    try {
-                        doorThread.wait();
-                    } catch (InterruptedException e) {
-                        state=3;
-                    }
-                    state = 1;
-                }
-                break;
-            default:
-                break;
-        }
 
+                        break;
+                    case 2:
+                        gearThread = new Thread(new RunnGear());
+                        gearThread.start();
+                        synchronized (gearThread)
+                        {
+                            try {
+                                gearThread.wait();
+                                doorThread = new Thread(new RunnDoor());
+                                doorThread.start();
+                                synchronized (doorThread) {
+                                    try {
+                                        doorThread.wait();
+                                    } catch (InterruptedException e) {
+                                        state=3;
+                                        System.out.println(state);
+                                    }
+                                    state = 1;
+                                    System.out.println(state);
+                                }
+                            } catch (InterruptedException e) {
+                                state=2;
+                                System.out.println(state);
+                            }
+
+                        }
+                        break;
+                    case 3:
+                        doorThread = new Thread(new RunnDoor());
+                        doorThread.start();
+                        synchronized (doorThread) {
+                            try {
+                                doorThread.wait();
+                            } catch (InterruptedException e) {
+                                state=3;
+                                System.out.println(state);
+                            }
+                            state = 1;
+                            System.out.println(state);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+        });
+        mainThread.start();
 
 
     }
@@ -127,7 +148,7 @@ class RunnDoor implements Runnable
         try {
             doorController.changeDoorState();
         } catch (InterruptedException e) {
-            System.out.println("Gears stopped while moving");
+            System.out.println("Doors stopped while moving");
         } catch (IOException e) {
             e.printStackTrace();
         }
