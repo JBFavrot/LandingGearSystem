@@ -73,7 +73,7 @@ public class GearController {
         {
             gear.setState(GearModel.states.movingUp);
             System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear("moving");
+            SystemView.refreshGear(gear.getState());
         }
         try
         {
@@ -87,7 +87,7 @@ public class GearController {
         {
             gear.setState(GearModel.states.up);
             System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear("up");
+            SystemView.refreshGear(gear.getState());
         }
     }
 
@@ -96,7 +96,7 @@ public class GearController {
         {
             gear.setState(GearModel.states.movingDown);
             System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear("moving");
+            SystemView.refreshGear(gear.getState());
         }
         try
         {
@@ -110,7 +110,7 @@ public class GearController {
         {
             gear.setState(GearModel.states.down);
             System.out.println(gear.toString() + " " + gear.getState());
-            SystemView.refreshGear("down");
+            SystemView.refreshGear(gear.getState());
         }
     }
 

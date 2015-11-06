@@ -76,7 +76,7 @@ public class DoorController {
         {
             door.setState(DoorModel.states.movingDown);
             System.out.println(door.toString() + " " + door.getState());
-            //SystemView.refreshDoor();
+            SystemView.refreshDoor(door.getState());
         }
         try
         {
@@ -90,7 +90,7 @@ public class DoorController {
         {
             door.setState(DoorModel.states.opened);
             System.out.println(door.toString() + " " + door.getState());
-            //SystemView.refreshDoor();
+            SystemView.refreshDoor(door.getState());
         }
     }
 
@@ -99,7 +99,7 @@ public class DoorController {
         {
             door.setState(DoorModel.states.movingUp);
             System.out.println(door.toString() + " " + door.getState());
-            //SystemView.refreshDoor();
+            SystemView.refreshDoor(door.getState());
         }
         try
         {
@@ -113,7 +113,7 @@ public class DoorController {
         {
             door.setState(DoorModel.states.closed);
             System.out.println(door.toString() + " " + door.getState());
-            //SystemView.refreshDoor();
+            SystemView.refreshDoor(door.getState());
         }
     }
 }

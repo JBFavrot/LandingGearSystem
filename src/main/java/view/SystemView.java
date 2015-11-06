@@ -1,6 +1,8 @@
 package view;
 
 import controler.SystemController;
+import model.DoorModel;
+import model.GearModel;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -176,42 +178,67 @@ public class SystemView extends JFrame implements ChangeListener{
 		}
     }
 
-    public void refreshDoor()
+    public static void refreshDoor(DoorModel.states state) throws IOException
     {
         //TODO: Implement function
+		String path = "";
+
+		if(state == DoorModel.states.movingUp || state == DoorModel.states.movingDown )
+		{
+			path = "./images/door_moving.jpg";
+		}
+		else if(state == DoorModel.states.opened)
+		{
+			path = "./images/door_open.PNG";
+		}
+		else if(state == DoorModel.states.closed)
+		{
+			path = "./images/door_closed.jpg";
+		}
+
+		File file = new File(path);
+		BufferedImage icon = ImageIO.read(file);
+
+		pic_door1.setIcon(new ImageIcon(icon));
+		pic_door2.setIcon(new ImageIcon(icon));
+		pic_door3.setIcon(new ImageIcon(icon));
+
+		state_door1.setText("State: "+state.toString());
+		state_door2.setText("State: "+state.toString());
+		state_door3.setText("State: "+state.toString());
+
     }
 
-	public static void refreshGear(String state) throws IOException {
+	public static void refreshGear(GearModel.states state) throws IOException {
 		//TODO: Implement function
 		String path = "";
-		System.out.println("step 1");
 
-		if(state.equals("moving"))
+		if(state == GearModel.states.movingUp || state == GearModel.states.movingDown )
 		{
 			path = "./images/gear_moving.jpg";
+			lights.setIcon(new ImageIcon(ImageIO.read(new File("./images/orange.jpg"))));
 		}
-		else if(state.equals("down"))
+		else if(state == GearModel.states.down)
 		{
 			path = "./images/gear_down.PNG";
+			lights.setIcon(new ImageIcon(ImageIO.read(new File("./images/green.jpg"))));
 		}
-		else if(state.equals("up"))
+		else if(state == GearModel.states.up)
 		{
 			path = "./images/gear_retracted.jpg";
+			lights.setIcon(new ImageIcon(ImageIO.read(new File("./images/feu_vide.jpg"))));
 		}
 
-		File file = new File(path); System.out.println("step 3");
-		BufferedImage icon = ImageIO.read(file); System.out.println("step 4");
+		File file = new File(path);
+		BufferedImage icon = ImageIO.read(file);
 
 		pic_gear1.setIcon(new ImageIcon(icon));
 		pic_gear2.setIcon(new ImageIcon(icon));
 		pic_gear3.setIcon(new ImageIcon(icon));
 
-		System.out.println("step 5");
+		state_gear1.setText("State: "+state.toString());
+		state_gear2.setText("State: "+state.toString());
+		state_gear3.setText("State: "+state.toString());
 
-		state_gear1.setText("State: "+state);
-		state_gear2.setText("State: "+state);
-		state_gear3.setText("State: "+state);
-
-		System.out.println("step 6");
 	}
 }
