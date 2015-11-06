@@ -1,5 +1,7 @@
 package view;
 
+import controler.SystemController;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class SystemView extends JFrame implements ChangeListener{
-	
+
+    SystemController systemController = SystemController.getInstance();
+
 	public SystemView() throws IOException {
 		
 	    this.setTitle("Landing Gear Control Pannel");
@@ -19,7 +23,7 @@ public class SystemView extends JFrame implements ChangeListener{
 	    this.setResizable(false);
 	    this.setLocationRelativeTo(null);	    
 	    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	      
+
 	    //*****************************HANDLER*******************************
 	    
 	    JLabel title_handler = new JLabel("Gears Handler");
@@ -160,6 +164,16 @@ public class SystemView extends JFrame implements ChangeListener{
      * @param e a ChangeEvent object
      */
     public void stateChanged(ChangeEvent e) {
+        JSlider source = (JSlider)e.getSource();
+        if (!source.getValueIsAdjusting())
+        {
+            int action = (int) source.getValue();
+            if (action == 0 || action == 40) systemController.changeSystemState();
+        }
+    }
 
+    public void refreshDoor()
+    {
+        //TODO: Implement function
     }
 }

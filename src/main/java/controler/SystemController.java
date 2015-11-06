@@ -5,7 +5,7 @@ package controler;
  */
 public class SystemController {
 
-
+    GearController gearController = GearController.getInstance();
 
     private static SystemController ourInstance = new SystemController();
 
@@ -16,9 +16,10 @@ public class SystemController {
     private SystemController() {
     }
 
-}
 
-class ThreadDoors extends Thread
-{
+    public void changeSystemState()
+    {
+        gearController.changeGearState();
+    }
 
 }

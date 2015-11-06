@@ -1,6 +1,5 @@
 package controler;
 
-import model.DataModel;
 import model.DoorModel;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class DoorController {
         //Check all doors have the same state
         for(DoorModel door:doors)
         {
-            DataModel.states gearState = door.getState();
+            DoorModel.states gearState = door.getState();
         }
         return 0;
     }

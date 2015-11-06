@@ -2,15 +2,16 @@ package model;
 
 /**
  * Created by Jean-Baptiste on 06/11/2015.
- * Data model for gears and doors
  */
 public class DataModel {
+    private static DataModel ourInstance = new DataModel();
 
-    public enum states{
-        movingUp,
-        movingDown,
-        opened,
-        closed,
-        problem
+    public static DataModel getInstance() {
+        return ourInstance;
     }
+
+    private DataModel() {
+    }
+
+
 }

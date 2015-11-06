@@ -1,11 +1,8 @@
 package controler;
 
-import model.DataModel;
-import model.DoorModel;
 import model.GearModel;
 
-import java.util.List;
-import java.util.function.Function;
+import java.util.*;
 
 /**
  * Created by Jean-Baptiste on 06/11/2015.
@@ -14,7 +11,8 @@ import java.util.function.Function;
 
 public class GearController {
 
-    private List<GearModel> gears;
+    private List<GearModel> gears = new Vector<GearModel>();
+
 
     private static GearController ourInstance = new GearController();
 
@@ -31,7 +29,7 @@ public class GearController {
         Boolean testGearsState=true;
 
         //Check all gears have the same state
-        DataModel.states firstGearState = null;
+        GearModel.states firstGearState = null;
         if(gears.size()!=0)
         {
             firstGearState = gears.get(0).getState();
@@ -39,7 +37,7 @@ public class GearController {
 
         for(GearModel gear:gears)
         {
-            DataModel.states gearState = gear.getState();
+            GearModel.states gearState = gear.getState();
             if(gearState != firstGearState)
             {
                 testGearsState=false;
@@ -48,10 +46,10 @@ public class GearController {
         if(testGearsState)
         {
             switch (firstGearState) {
-                case opened:
+                case down:
                     closeGears();
                     break;
-                case closed:
+                case up:
                     openGears();
                     break;
                 case movingUp:
@@ -75,7 +73,8 @@ public class GearController {
     {
         for(GearModel gear:gears)
         {
-            gear.setState(DataModel.states.movingUp);
+            gear.setState(GearModel.states.movingUp);
+            System.out.println(gear.toString() + " " + gear.getState());
         }
         try
         {
@@ -87,7 +86,8 @@ public class GearController {
         }
         for(GearModel gear:gears)
         {
-            gear.setState(DataModel.states.closed);
+            gear.setState(GearModel.states.up);
+            System.out.println(gear.toString() + " " + gear.getState());
         }
     }
 
@@ -95,7 +95,8 @@ public class GearController {
     {
         for(GearModel gear:gears)
         {
-            gear.setState(DataModel.states.movingDown);
+            gear.setState(GearModel.states.movingDown);
+            System.out.println(gear.toString() + " " + gear.getState());
         }
         try
         {
@@ -107,7 +108,8 @@ public class GearController {
         }
         for(GearModel gear:gears)
         {
-            gear.setState(DataModel.states.opened);
+            gear.setState(GearModel.states.down);
+            System.out.println(gear.toString() + " " + gear.getState());
         }
     }
 
@@ -115,7 +117,7 @@ public class GearController {
     {
         for(GearModel gear:gears)
         {
-            gear.setState(DataModel.states.problem);
+            gear.setState(GearModel.states.problem);
         }
     }
 

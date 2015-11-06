@@ -9,13 +9,20 @@ package model;
 
 public class DoorModel {
 
-    private DataModel.states doorState = DataModel.states.closed;
+    public enum states{
+        movingUp,
+        movingDown,
+        opened,
+        closed,
+        problem
+    }
+    private states doorState = states.closed;
 
     /**
      *Accessor for doorState
      * @return Door state
      */
-    public DataModel.states getState()
+    public states getState()
     {
         return doorState;
     }
@@ -25,7 +32,7 @@ public class DoorModel {
      * @param state new state of the door
      * @return updated state of the door
      */
-    public DataModel.states setState(DataModel.states state)
+    public states setState(states state)
     {
         doorState=state;
         return state;
