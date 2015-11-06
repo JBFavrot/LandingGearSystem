@@ -40,7 +40,7 @@ public class SystemView extends JFrame{
 	    
         //****************************LED*************************************
         
-	    String path_green = "./images/green.jpg";
+	    String path_green = "./images/feu_vide.jpg";
         File file_green = new File(path_green);
         BufferedImage image_green;
 	
@@ -58,7 +58,7 @@ public class SystemView extends JFrame{
 	    
 	    
 	    //******************************GEARS******************************
-	    String path = "./images/gear_pic.PNG";
+	    String path = "./images/gear_retracted.jpg";
         File file = new File(path);
         BufferedImage image;
 	
@@ -103,7 +103,7 @@ public class SystemView extends JFrame{
 	    
 	    //************************DOORS******************************
 	    
-	    String path_door = "./images/door_pic.PNG";
+	    String path_door = "./images/door_closed.jpg";
         File file_door = new File(path_door);
         BufferedImage image_door;
 	
