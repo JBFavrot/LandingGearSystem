@@ -1,29 +1,27 @@
 package model;
 
-public class DoorModel {
-    private static final int OPEN = 1;
-    private static final int CLOSED = 0;
 
-    int doorState = CLOSED;
+public class DoorModel {
+
+    private DataModel.states doorState = DataModel.states.closed;
 
     /**
-     * Changes the door state
-     * @return new door state
+     *Accessor for doorState
+     * @return Door state
      */
-    public int changeDoorState()
+    public DataModel.states getDoorState()
     {
-        if (doorState==CLOSED) doorState=OPEN;
-        else doorState=CLOSED;
         return doorState;
-
     }
 
     /**
-     *
-     * @return Door state
+     * Setter for doorState
+     * @param state new state of the door
+     * @return updated state of the door
      */
-    public int getDoorState()
+    public DataModel.states setDoorState(DataModel.states state)
     {
-        return doorState;
+        doorState=state;
+        return state;
     }
 }

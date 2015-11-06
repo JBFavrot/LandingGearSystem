@@ -6,12 +6,11 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JSlider;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-public class SystemView extends JFrame{
+public class SystemView extends JFrame implements ChangeListener{
 	
 	public SystemView() throws IOException {
 		
@@ -19,7 +18,7 @@ public class SystemView extends JFrame{
 	    this.setSize(370, 700);
 	    this.setResizable(false);
 	    this.setLocationRelativeTo(null);	    
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	            
+	    this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	      
 	    //*****************************HANDLER*******************************
 	    
@@ -28,7 +27,11 @@ public class SystemView extends JFrame{
 	    
 	    JSlider handler = new JSlider(JSlider.VERTICAL, 0, 40, 40);
         handler.setPaintTicks(true);
- 
+
+		handler.addChangeListener(this);
+
+
+
         Hashtable<Integer, JLabel> labels = new Hashtable<Integer, JLabel>();
         labels.put(0, new JLabel("DOWN"));
         labels.put(40, new JLabel("UP"));
@@ -149,6 +152,14 @@ public class SystemView extends JFrame{
 	    this.setVisible(true);
 		
 	}
-	
 
+
+    /**
+     * Invoked when the target of the listener has changed its state.
+     *
+     * @param e a ChangeEvent object
+     */
+    public void stateChanged(ChangeEvent e) {
+
+    }
 }
