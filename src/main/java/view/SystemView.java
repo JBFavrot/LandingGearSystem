@@ -26,7 +26,7 @@ public class SystemView extends JFrame{
 	    JLabel title_handler = new JLabel("Gears Handler");
 	    title_handler.setBounds(10, 10, 100, 20);
 	    
-	    JSlider handler = new JSlider(JSlider.VERTICAL, 0, 40, 0);
+	    JSlider handler = new JSlider(JSlider.VERTICAL, 0, 40, 40);
         handler.setPaintTicks(true);
  
         Hashtable<Integer, JLabel> labels = new Hashtable<Integer, JLabel>();
@@ -40,15 +40,15 @@ public class SystemView extends JFrame{
 	    
         //****************************LED*************************************
         
-	    String path_green = "./images/feu_vide.jpg";
-        File file_green = new File(path_green);
-        BufferedImage image_green;
+	    String path_vide = "./images/feu_vide.jpg";
+        File file_vide = new File(path_vide);
+        BufferedImage image_vide;
 	
-		image_green = ImageIO.read(file_green);
+		image_vide = ImageIO.read(file_vide);
 		
 	    JLabel lights = new JLabel();
 	    lights.setBounds(200, 50, 75, 160);
-	    lights.setIcon(new ImageIcon(image_green));
+	    lights.setIcon(new ImageIcon(image_vide));
 	    
 	    this.add(title_handler);
 	    this.add(handler);         
