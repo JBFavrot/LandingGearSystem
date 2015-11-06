@@ -3,7 +3,9 @@ package controler;
 import model.DataModel;
 import model.DoorModel;
 import model.GearModel;
+import view.SystemView;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ public class DoorController {
     }
 
 
-    public int changeDoorState() throws InterruptedException {
+    public int changeDoorState() throws InterruptedException, IOException {
         Boolean testDoorsState=true;
 
         //Check all gears have the same state
@@ -49,7 +51,7 @@ public class DoorController {
                     openDoor();
                     break;
                 case movingDown:
-                    closeDoor();
+                    openDoor();
                     break;
                 case problem:
                     break;
@@ -63,14 +65,55 @@ public class DoorController {
     }
 
     private void riseProblem() {
-
+        for(DoorModel door:doors)
+        {
+            door.setState(DoorModel.states.problem);
+        }
     }
 
-    private void openDoor() {
-
+    private void openDoor() throws IOException, InterruptedException {
+        for(DoorModel door:doors)
+        {
+            door.setState(DoorModel.states.movingDown);
+            System.out.println(door.toString() + " " + door.getState());
+            //SystemView.refreshDoor();
+        }
+        try
+        {
+            Thread.sleep(5000);
+        }
+        catch (InterruptedException e)
+        {
+            throw new InterruptedException(e.getMessage());
+        }
+        for(DoorModel door:doors)
+        {
+            door.setState(DoorModel.states.opened);
+            System.out.println(door.toString() + " " + door.getState());
+            //SystemView.refreshDoor();
+        }
     }
 
-    private void closeDoor() {
-
+    private void closeDoor() throws IOException,InterruptedException {
+        for(DoorModel door:doors)
+        {
+            door.setState(DoorModel.states.movingUp);
+            System.out.println(door.toString() + " " + door.getState());
+            //SystemView.refreshDoor();
+        }
+        try
+        {
+            Thread.sleep(5000);
+        }
+        catch (InterruptedException e)
+        {
+            throw new InterruptedException(e.getMessage());
+        }
+        for(DoorModel door:doors)
+        {
+            door.setState(DoorModel.states.closed);
+            System.out.println(door.toString() + " " + door.getState());
+            //SystemView.refreshDoor();
+        }
     }
 }
