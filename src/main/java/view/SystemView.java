@@ -171,11 +171,7 @@ public class SystemView extends JFrame implements ChangeListener{
         {
             int action = (int) source.getValue();
             if (action == 0 || action == 40) {
-				try {
-					systemController.changeSystemState();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+                systemController.changeSystemState();
 			}
 		}
     }

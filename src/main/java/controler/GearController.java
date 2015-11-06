@@ -1,5 +1,6 @@
 package controler;
 
+import model.DataModel;
 import model.GearModel;
 import view.SystemView;
 
@@ -13,20 +14,17 @@ import java.util.*;
 
 public class GearController {
 
-    private List<GearModel> gears = new Vector<GearModel>();
+    private List<GearModel> gears = null;
 
 
-    private static GearController ourInstance = new GearController();
-
-    public static GearController getInstance() {
-        return ourInstance;
+    public GearController() {
+        gears = DataModel.getInstance().getGears();
     }
 
-    private GearController() {
-    }
+   
 
 
-    public int changeGearState() throws IOException {
+    public int changeGearState() throws IOException,InterruptedException {
         Boolean testGearsState=true;
 
         //Check all gears have the same state
@@ -70,7 +68,7 @@ public class GearController {
     }
 
 
-    private void closeGears() throws IOException {
+    private void closeGears() throws IOException, InterruptedException {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.movingUp);
@@ -83,7 +81,7 @@ public class GearController {
         }
         catch (InterruptedException e)
         {
-            e.printStackTrace();
+            throw new InterruptedException(e.getMessage());
         }
         for(GearModel gear:gears)
         {
@@ -93,7 +91,7 @@ public class GearController {
         }
     }
 
-    private void openGears() throws IOException {
+    private void openGears() throws IOException, InterruptedException {
         for(GearModel gear:gears)
         {
             gear.setState(GearModel.states.movingDown);
@@ -106,7 +104,7 @@ public class GearController {
         }
         catch (InterruptedException e)
         {
-            e.printStackTrace();
+            throw new InterruptedException(e.getMessage());
         }
         for(GearModel gear:gears)
         {

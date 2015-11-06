@@ -7,7 +7,7 @@ import java.io.IOException;
  */
 public class SystemController {
 
-    GearController gearController = GearController.getInstance();
+    GearController gearController = new GearController();
 
     private static SystemController ourInstance = new SystemController();
 
@@ -19,8 +19,27 @@ public class SystemController {
     }
 
 
-    public void changeSystemState() throws IOException {
-        gearController.changeGearState();
+    Thread gearThread = null;
+
+    public void changeSystemState()
+    {
+        if(gearThread!=null)
+        {
+            gearThread.interrupt();
+        }
+        gearThread = new Thread( new Runnable() {
+            public void run() {
+                try {
+                    gearController.changeGearState();
+                } catch (InterruptedException e) {
+                    System.out.println("Gears stopped while moving");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        gearThread.start();
+
     }
 
 }

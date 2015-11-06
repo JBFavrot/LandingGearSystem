@@ -13,15 +13,8 @@ public class Test {
 
         //Initialisation
 
-        GearModel gearFront = new GearModel();
-        GearModel gearLeft = new GearModel();
-        GearModel gearRight = new GearModel();
+        SystemController systemController = SystemController.getInstance();
 
-        GearController gearController = GearController.getInstance();
-
-        gearController.add(gearFront);
-        gearController.add(gearLeft);
-        gearController.add(gearRight);
 
         //Display
 
