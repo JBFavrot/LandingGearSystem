@@ -7,7 +7,8 @@ package model;
 public class DataModel {
 
     public enum states{
-        moving,
+        movingUp,
+        movingDown,
         opened,
         closed,
         problem
