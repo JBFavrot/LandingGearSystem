@@ -20,7 +20,7 @@ public class DoorController {
     }
 
 
-    public int changeDoorState() throws InterruptedException, IOException {
+    public synchronized int changeDoorState() throws InterruptedException, IOException {
         Boolean testDoorsState=true;
 
         //Check all gears have the same state
@@ -71,13 +71,13 @@ public class DoorController {
         }
     }
 
-    private void openDoor() throws IOException, InterruptedException {
+    private synchronized void openDoor() throws IOException, InterruptedException {
         for(DoorModel door:doors)
         {
             door.setState(DoorModel.states.movingDown);
-            System.out.println(door.toString() + " " + door.getState());
             SystemView.refreshDoor(door.getState());
         }
+        System.out.println("Doors " + doors.get(0).getState());
         try
         {
             Thread.sleep(5000);
@@ -89,18 +89,18 @@ public class DoorController {
         for(DoorModel door:doors)
         {
             door.setState(DoorModel.states.opened);
-            System.out.println(door.toString() + " " + door.getState());
             SystemView.refreshDoor(door.getState());
         }
+        System.out.println("Doors " + doors.get(0).getState());
     }
 
-    private void closeDoor() throws IOException,InterruptedException {
+    private synchronized void closeDoor() throws IOException,InterruptedException {
         for(DoorModel door:doors)
         {
             door.setState(DoorModel.states.movingUp);
-            System.out.println(door.toString() + " " + door.getState());
-            SystemView.refreshDoor(door.getState());
         }
+        SystemView.refreshDoor(doors.get(0).getState());
+        System.out.println("Doors " + doors.get(0).getState());
         try
         {
             Thread.sleep(5000);
@@ -112,8 +112,8 @@ public class DoorController {
         for(DoorModel door:doors)
         {
             door.setState(DoorModel.states.closed);
-            System.out.println(door.toString() + " " + door.getState());
             SystemView.refreshDoor(door.getState());
         }
+        System.out.println("Doors " + doors.get(0).getState());
     }
 }

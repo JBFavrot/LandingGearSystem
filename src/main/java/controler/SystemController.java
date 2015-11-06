@@ -23,11 +23,10 @@ public class SystemController {
     }
 
 
-    GearThread gearThread = null;
-    DoorThread doorThread = null;
+    Thread gearThread = null;
+    Thread doorThread = null;
 
-    public void changeSystemState()
-    {
+    public void changeSystemState() {
         if(doorThread!=null)
         {
             doorThread.interrupt();
@@ -39,24 +38,75 @@ public class SystemController {
         switch(state)
         {
             case 1:
-                doorThread = new DoorThread();
-                doorThread.run();
+                doorThread = new Thread(new RunnDoor());
+                doorThread.start();
+                synchronized (doorThread)
+                {
+                    try {
+                        doorThread.wait();
+                    } catch (InterruptedException e) {
+                        state=3;
+                    }
+                    gearThread = new Thread(new RunnGear());
+                    gearThread.start();
+                    synchronized (gearThread)
+                    {
+                        try {
+                            gearThread.wait();
+                        } catch (InterruptedException e) {
+                            state=2;
+                        }
+                        doorThread = new Thread(new RunnDoor());
+                        doorThread.start();
+                    }
+                }
 
                 break;
             case 2:
+                gearThread = new Thread(new RunnGear());
+                gearThread.start();
+                synchronized (gearThread)
+                {
+                    try {
+                        gearThread.wait();
+                    } catch (InterruptedException e) {
+                        state=2;
+                    }
+                    doorThread = new Thread(new RunnDoor());
+                    doorThread.start();
+                    synchronized (doorThread) {
+                        try {
+                            doorThread.wait();
+                        } catch (InterruptedException e) {
+                            state=3;
+                        }
+                        state = 1;
+                    }
+                }
                 break;
             case 3:
+                doorThread = new Thread(new RunnDoor());
+                doorThread.start();
+                synchronized (doorThread) {
+                    try {
+                        doorThread.wait();
+                    } catch (InterruptedException e) {
+                        state=3;
+                    }
+                    state = 1;
+                }
                 break;
             default:
                 break;
         }
 
 
+
     }
 
 }
 
-class GearThread extends Thread
+class RunnGear implements Runnable
 {
     GearController gearController = new GearController();
     public void run() {
@@ -70,7 +120,7 @@ class GearThread extends Thread
     }
 }
 
-class DoorThread extends Thread
+class RunnDoor implements Runnable
 {
     DoorController doorController = new DoorController();
     public void run() {
